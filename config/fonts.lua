@@ -9,10 +9,10 @@ return {
    --    '鸿蒙黑体',
    -- }),
    font = wezterm.font_with_fallback({
-      'Menlo',             -- macOS 内置
-      'Consolas',          -- Windows 内置
-      'DejaVu Sans Mono',  -- Linux 常见内置
-      'monospace',         -- 通用 fallback
+      'Consolas',           -- Windows 内置
+      'Monaco',             -- macOS 内置
+      'DejaVu Sans Mono',   -- Linux 常见内置
+      'Courier New',        -- 三平台都有，最终兜底
    }),
    font_size = font_size,
 
