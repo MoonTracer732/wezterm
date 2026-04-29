@@ -13,6 +13,7 @@ return {
    colors = colors,
 
    -- background
+   --[[
    background = {
       {
          source = { File = wezterm.GLOBAL.background },
@@ -25,7 +26,17 @@ return {
          opacity = 0.96,
       },
    },
+   ]]--
 
+-- pure background
+   background = {
+      {
+         source = { Color = colors.background },
+         height = '100%',
+         width = '100%',
+         opacity = 0.85,
+      },
+   },
    -- scrollbar
    enable_scroll_bar = false,
 

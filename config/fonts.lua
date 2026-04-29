@@ -4,9 +4,15 @@ local platform = require('utils.platform')
 local font_size = platform().is_mac and 12 or 12
 
 return {
+   -- font = wezterm.font_with_fallback({
+   --    'JetBrainsMonoNL Nerd Font',
+   --    '鸿蒙黑体',
+   -- }),
    font = wezterm.font_with_fallback({
-      'JetBrainsMonoNL Nerd Font',
-      '鸿蒙黑体',
+      'Menlo',             -- macOS 内置
+      'Consolas',          -- Windows 内置
+      'DejaVu Sans Mono',  -- Linux 常见内置
+      'monospace',         -- 通用 fallback
    }),
    font_size = font_size,
 
