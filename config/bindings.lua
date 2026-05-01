@@ -1,16 +1,16 @@
-local wezterm = require('wezterm')
-local platform = require('utils.platform')()
-local backdrops = require('utils.backdrops')
+local wezterm = require("wezterm")
+local platform = require("utils.platform")()
+local backdrops = require("utils.backdrops")
 local act = wezterm.action
 
 local mod = {}
 
 if platform.is_mac then
-   mod.SUPER = 'SUPER'
-   mod.SUPER_REV = 'SUPER|CTRL'
+	mod.SUPER = "SUPER"
+	mod.SUPER_REV = "SUPER|CTRL"
 elseif platform.is_win or platform.is_linux then
-   mod.SUPER = 'ALT' -- to not conflict with Windows key shortcuts
-   mod.SUPER_REV = 'ALT|CTRL'
+	mod.SUPER = "ALT" -- to not conflict with Windows key shortcuts
+	mod.SUPER_REV = "ALT|CTRL"
 end
 
 -- stylua: ignore
@@ -80,7 +80,16 @@ local keys = {
    { key = 'c',          mods = 'CTRL|SHIFT',  action = act.CopyTo('Clipboard') },
    { key = 'v',          mods = 'CTRL|SHIFT',  action = act.PasteFrom('Clipboard') },
    { key = 'Insert',     mods = 'SHIFT',       action = act.PasteFrom('PrimarySelection') },
-
+    -- 复制到上一个命令之前的所有内容
+    {
+        key = 'c',
+        mods = mod.SUPER_REV,
+        action = wezterm.action_callback(function(window, pane)
+            local dims = pane:get_dimensions()
+            local lines = pane:get_lines_as_text(dims.scrollback_rows)
+            wezterm.clipboard.set_text(lines)
+        end),
+    },
    -- tabs --
    -- tabs: spawn+close
    { key = 'Enter',      mods = mod.SUPER,     action = act.SpawnTab('DefaultDomain') },
@@ -214,24 +223,24 @@ local key_tables = {
 }
 
 local mouse_bindings = {
-   -- Ctrl-click will open the link under the mouse cursor
-   {
-      event = { Up = { streak = 1, button = 'Left' } },
-      mods = 'CTRL',
-      action = act.OpenLinkAtMouseCursor,
-   },
-   -- Right-click to copy selection
-   {
-      event = { Up = { streak = 1, button = 'Right' } },
-      mods = 'NONE',
-      action = act.CopyTo('Clipboard'),
-   },
+	-- Ctrl-click will open the link under the mouse cursor
+	{
+		event = { Up = { streak = 1, button = "Left" } },
+		mods = "CTRL",
+		action = act.OpenLinkAtMouseCursor,
+	},
+	-- Right-click to copy selection
+	{
+		event = { Up = { streak = 1, button = "Right" } },
+		mods = "NONE",
+		action = act.CopyTo("Clipboard"),
+	},
 }
 
 return {
-   disable_default_key_bindings = true,
-   leader = { key = 'Space', mods = mod.SUPER_REV },
-   keys = keys,
-   key_tables = key_tables,
-   mouse_bindings = mouse_bindings,
+	disable_default_key_bindings = true,
+	leader = { key = "Space", mods = mod.SUPER_REV },
+	keys = keys,
+	key_tables = key_tables,
+	mouse_bindings = mouse_bindings,
 }
