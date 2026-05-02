@@ -79,6 +79,8 @@ local keys = {
    -- copy/paste --
    { key = 'c',          mods = 'CTRL|SHIFT',  action = act.CopyTo('Clipboard') },
    { key = 'v',          mods = 'CTRL|SHIFT',  action = act.PasteFrom('Clipboard') },
+   { key = 'v', mods = 'CMD', action = act.PasteFrom('Clipboard') },
+   { key = 'c', mods = 'CMD', action = act.CopyTo('Clipboard') },
    { key = 'Insert',     mods = 'SHIFT',       action = act.PasteFrom('PrimarySelection') },
     -- 复制到上一个命令之前的所有内容
     {
